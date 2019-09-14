@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "718199655429",
+    "firebase_url": "https://snacc-19b9a.firebaseio.com",
+    "project_id": "snacc-19b9a",
+    "storage_bucket": "snacc-19b9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718199655429:android:a8fbf1da896d0e753ae06c",
+        "android_client_info": {
+          "package_name": "org.hackthenorth.snacc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718199655429-2k4kbu1vkbk5j3grfnuhle4715ql8ecf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.hackthenorth.snacc",
+            "certificate_hash": "b7ecf38856e449085e93b623ae642a177ed821b1"
+          }
+        },
+        {
+          "client_id": "718199655429-k4057b0vkfg9lo7o9n9nmoorur9j3svt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCag2VpAo72dRk3FzJcEmwp5Ii9KR1N38Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718199655429-pvqnpmmp6a130ttl6ueiuqjm4rasvkbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

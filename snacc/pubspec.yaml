@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_auth: any
+  google_sign_in: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,3 +72,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  fonts:
+    - family: Istok Web
+      fonts:
+        - asset: asset/Istok_Web/IstokWeb-Regular.ttf
+        - asset: asset/Istok_Web/IstokWeb-RegularItalic.ttf
+          style: italic
+        - asset: asset/Istok_Web/IstokWeb-Bold.ttf
+          weight: 700
+        - asset: asset/Istok_Web/IstokWeb-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: Overpass
+      fonts:
+        - asset: asset/Overpass/Overpass-Regular.ttf

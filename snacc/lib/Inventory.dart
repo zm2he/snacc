@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
+import 'package:snacc/stopwords.dart';
+import 'package:snacc/wordbank.dart';
 
 class TextRecognizer extends StatefulWidget {
+  final List<String> words = [];
+
   @override
   _TextRecognizerState createState() => _TextRecognizerState();
 }
@@ -15,6 +21,20 @@ class _TextRecognizerState extends State<TextRecognizer> {
 
   @override
   Widget build(BuildContext context) {
+    if (_visionText != null) {
+      widget.words.clear();
+      for (var line in _visionText.text.split('\n')) {
+        for (var word in line.split(' ')) {
+          word = word.toLowerCase();
+          if (word.length > 2 &&
+              wordbank.contains(word) &&
+              !stopwords.contains(word)) {
+            widget.words.add(word);
+          }
+        }
+      }
+      print(widget.words);
+    }
     return CameraMlVision<VisionText>(
       detector: FirebaseVision.instance.textRecognizer().processImage,
       onResult: (visionText) {
@@ -30,6 +50,7 @@ class _TextRecognizerState extends State<TextRecognizer> {
 class Inventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final textRecognizer = TextRecognizer();
     return FutureBuilder<FirebaseUser>(
         builder: (context, firebaseUserSnapshot) {
           if (!firebaseUserSnapshot.hasData)
@@ -60,7 +81,7 @@ class Inventory extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(24),
                             child: AnimatedOpacity(
-                              child: TextRecognizer(),
+                              child: textRecognizer,
                               duration: Duration(milliseconds: 200),
                               opacity:
                                   sessionSnapshot.data['cameraActive'] ? 1 : 0,
@@ -103,6 +124,14 @@ class Inventory extends StatelessWidget {
                                   await sink.setData(
                                       {'cameraActive': !cameraActive},
                                       merge: true);
+                                  for (var word in textRecognizer.words) {
+                                    await Firestore.instance
+                                        .collection('inventory')
+                                        .add({
+                                      'item': word,
+                                      'uid': firebaseUserSnapshot.data.uid,
+                                    });
+                                  }
                                 },
                               ),
                               color: Theme.of(context).accentColor,

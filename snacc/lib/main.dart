@@ -29,10 +29,16 @@ Future<void> main() async {
           final firebaseUser =
               (await FirebaseAuth.instance.signInWithCredential(credential))
                   .user;
-          // set app state to home tab
-          await Firestore.instance
-              .document('session/${firebaseUser.uid}')
-              .setData({'navIndex': 0}, merge: true);
+          // set app state to home tab if no existing tab exists
+          if (!(await Firestore.instance
+                  .document('session/${firebaseUser.uid}')
+                  .get())
+              .data
+              .containsKey('navIndex')) {
+            await Firestore.instance
+                .document('session/${firebaseUser.uid}')
+                .setData({'navIndex': 0}, merge: true);
+          }
         }();
         // disable system overlays
         SystemChrome.setSystemUIOverlayStyle(

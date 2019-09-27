@@ -2,7 +2,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const https = require('https');
 const requestPromiseNative = require('request-promise-native')
-//const request = require('request');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -34,6 +33,7 @@ exports.onInventoryAdd = functions.firestore.document('inventory/{inventoryId}')
         json: true
     }
 
+    // requestPromiseNative returns promise instead of callback, resolving error with return type
     return requestPromiseNative(options)
         .then(function(parsedBody) {
             console.log(parsedBody);
